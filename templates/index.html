@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="180">
+    <meta charset="utf-8" />
+    <title>UDAAN DEMO INTERFACE</title>
+<style>
+
+body {
+  background: #191828;
+  color: #efedef;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.6em;
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 40px;
+  padding-right: 40px; }
+a {
+    text-decoration: none !important;
+}
+h1 {
+  font-size: 70px;
+  line-height: 0.8em;
+  color: rgba(255,255,255,0.2);
+  text-align: center;}
+h1:hover{
+  color:red;
+}
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none; }
+
+.tabs {
+  display: block;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0;
+  overflow: hidden; }
+  .tabs [class^="tab"] label,
+  .tabs [class*=" tab"] label {
+    color: #efedef;
+    cursor: pointer;
+    display: block;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1em;
+    padding: 1rem 0;
+    text-align: center; }
+  .tabs [class^="tab"] [type="radio"],
+  .tabs [class*=" tab"] [type="radio"] {
+    border-bottom: 1px solid rgba(239, 237, 239, 0.5);
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; }
+    .tabs [class^="tab"] [type="radio"]:hover, .tabs [class^="tab"] [type="radio"]:focus,
+    .tabs [class*=" tab"] [type="radio"]:hover,
+    .tabs [class*=" tab"] [type="radio"]:focus {
+      border-bottom: 1px solid #fd264f; }
+    .tabs [class^="tab"] [type="radio"]:checked,
+    .tabs [class*=" tab"] [type="radio"]:checked {
+      border-bottom: 2px solid #fd264f; }
+    .tabs [class^="tab"] [type="radio"]:checked + div,
+    .tabs [class*=" tab"] [type="radio"]:checked + div {
+      opacity: 1; }
+    .tabs [class^="tab"] [type="radio"] + div,
+    .tabs [class*=" tab"] [type="radio"] + div {
+      display: block;
+      opacity: 0;
+      padding: 1rem 0;
+      width: 90%;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; }
+  .tabs .tab-2 {
+    width: 50%; }
+    .tabs .tab-2 [type="radio"] + div {
+      width: 200%;
+      margin-left: 200%; }
+    .tabs .tab-2 [type="radio"]:checked + div {
+      margin-left: 0; }
+    .tabs .tab-2:last-child [type="radio"] + div {
+      margin-left: 100%; }
+    .tabs .tab-2:last-child [type="radio"]:checked + div {
+      margin-left: -100%; }
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 150px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.searchButton1 {
+  width: 150px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px 5px 5px 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 50%;
+  left: 50%;
+  margin-left: 25%;
+  margin-right: 50%;
+}
+
+.result
+{
+  width: 90%;
+  height: 80px;
+  padding-left:30px;
+  border: 3px solid #00B4CC;
+  background: white;
+  text-align: left;
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 5%;
+  border-radius: 60px;
+  display: inline-block;
+
+}
+
+
+hr{
+    padding: 0px;
+    margin: 0px; 
+    width:97%;   
+  }
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 30px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+  text-align: center;
+}
+
+.modal-body {padding: 2px 16px;
+color:black;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+
+}
+.searchButton2 {
+  width: 100%;
+  height: 60px;
+  background: #5cb85c;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px 5px 5px 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+
+</style>
+</head>
+<body>
+<h1>
+    Dashboard
+</h1>
+    <div>
+      <div class="wrap">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <button id="myBtn" class="searchButton1" style="width: 200px;">
+        +Add Asset
+     </button> 
+     <button id="myBtn1" class="searchButton1" style="width: 200px;">
+        +Add Task
+     </button> 
+     <button id="myBtn2" class="searchButton1" style="width: 200px;">
+        +Add Worker
+     </button><br><br>
+     <button id="myBtn3" class="searchButton1" style="width: 200px;">
+        +Assign Task
+     </button> 
+     <button id="myBtn4" class="searchButton1" style="width: 200px;">
+        -View Tasks
+     </button> 
+     <button id="myBtn5" class="searchButton1" style="width: 200px;" onclick="document.location.href='http://localhost:5000/assets/all';">
+        -View Assets
+     </button> 
+   </div>
+</div>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+<form action="http://localhost:5000/add-asset" method="post">
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>FORM</h2>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 30px;color: black;">
+        <style>
+        input {
+              height: 40px;
+              width:30%;
+              }
+      </style>
+      ASSET: <input type="text" name="asset" required><br><br>
+      ID: <input type="text" name="id"><br><br>
+      <p>
+    </div>
+    <div class="modal-footer">
+      <button class="searchButton2" type="submit" name="sub"><b>SAVE</b></button>
+    </div>
+    </div>
+  </form>
+      </div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<!-- The Modal -->
+<div id="myModal1" class="modal">
+<form action="http://localhost:5000/add-task" method="post">
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>FORM</h2>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 30px;color: black;">
+        <style>
+        input {
+              height: 40px;
+              width:30%;
+              }
+      </style>
+      Task: <input type="text" name="task" required><br><br>
+      ID: <input type="text" name="id"><br><br>
+      Description: <input type="text" name="disp"><br><br>
+      <p>
+    </div>
+    <div class="modal-footer">
+      <button class="searchButton2" type="submit" name="sub"><b>SAVE</b></button>
+    </div>
+    </div>
+  </form>
+      </div>
+
+<script>
+// Get the modal
+var modal1 = document.getElementById("myModal1");
+// Get the button that opens the modal
+var btn1 = document.getElementById("myBtn1");
+// Get the <span> element that closes the modal
+var span1 = document.getElementsByClassName("close")[1];
+// When the user clicks the button, open the modal 
+btn1.onclick = function() {
+  modal1.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+  modal1.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+  }
+}
+</script>
+
+<!-- The Modal -->
+<div id="myModal2" class="modal">
+<form action="http://localhost:5000/add-worker" method="post">
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>FORM</h2>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 30px;color: black;">
+        <style>
+        input {
+              height: 40px;
+              width:30%;
+              }
+      </style>
+      Name: <input type="text" name="worker" required><br><br>
+      ID: <input type="text" name="id"><br><br>
+      <p>
+    </div>
+    <div class="modal-footer">
+      <button class="searchButton2" type="submit" name="sub"><b>SAVE</b></button>
+    </div>
+    </div>
+  </form>
+      </div>
+
+<script>
+// Get the modal
+var modal2 = document.getElementById("myModal2");
+// Get the button that opens the modal
+var btn2 = document.getElementById("myBtn2");
+// Get the <span> element that closes the modal
+var span2 = document.getElementsByClassName("close")[2];
+// When the user clicks the button, open the modal 
+btn2.onclick = function() {
+  modal2.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span2.onclick = function() {
+  modal2.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal1) {
+    modal2.style.display = "none";
+  }
+}
+</script>
+
+
+
+<!-- The Modal -->
+<div id="myModal3" class="modal">
+<form action="http://localhost:5000/allocate-task" method="post">
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>FORM</h2>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 30px;color: black;">
+        <style>
+        input {
+              height: 40px;
+              width:30%;
+              }
+      </style>
+      ASSET ID: <input type="text" name="asset" required><br><br>
+      TASK ID: <input type="text" name="task"><br><br>
+      WORKER ID: <input type="text" name="worker" required><br><br>
+      Time Assigned: <input type="text" name="time" required><br><br>
+      Deadline Time: <input type="text" name="dtime" required><br><br>
+      <p>
+    </div>
+    <div class="modal-footer">
+      <button class="searchButton2" type="submit" name="sub"><b>SAVE</b></button>
+    </div>
+    </div>
+  </form>
+      </div>
+
+<script>
+// Get the modal
+var modal3 = document.getElementById("myModal3");
+// Get the button that opens the modal
+var btn3 = document.getElementById("myBtn3");
+// Get the <span> element that closes the modal
+var span3 = document.getElementsByClassName("close")[3];
+// When the user clicks the button, open the modal 
+btn3.onclick = function() {
+  modal3.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span3.onclick = function() {
+  modal3.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal3) {
+    modal3.style.display = "none";
+  }
+}
+</script>
+
+
+<!-- The Modal -->
+<div id="myModal4" class="modal">
+<form action="http://localhost:5000/get-task-for-worker" method="get">
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>FORM</h2>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 30px;color: black;">
+        <style>
+        input {
+              height: 40px;
+              width:30%;
+              }
+      </style>
+      
+      WORKER ID: <input type="text" name="worker" required><br><br>
+      
+      <p>
+    </div>
+    <div class="modal-footer">
+      <button class="searchButton2" type="submit" name="sub"><b>SEARCH</b></button>
+    </div>
+    </div>
+  </form>
+      </div>
+
+<script>
+// Get the modal
+var modal4 = document.getElementById("myModal4");
+// Get the button that opens the modal
+var btn4 = document.getElementById("myBtn4");
+// Get the <span> element that closes the modal
+var span4 = document.getElementsByClassName("close")[4];
+// When the user clicks the button, open the modal 
+btn4.onclick = function() {
+  modal4.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span4.onclick = function() {
+  modal4.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal4) {
+    modal4.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>
